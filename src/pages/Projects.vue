@@ -192,7 +192,7 @@ onMounted(() => setTimeout(() => { bannerVisible.value = true; }, 100));
         :key="project.id"
         item-class-name="project-card"
       >
-        <RouterLink :to="project.link" class="project-card-inner">
+        <RouterLink :to="project.link ?? ''" class="project-card-inner">
           <div class="project-info">
             <div class="project-tags">
               <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>

@@ -100,7 +100,9 @@ const updateCardTransforms = () => {
     if (props.blurAmount) {
       let topCardIndex = 0;
       for (let j = 0; j < cardsRef.value.length; j++) {
-        const jCardTop = cardsRef.value[j].offsetTop;
+        const cardJ = cardsRef.value[j];
+        if (!cardJ) continue;
+        const jCardTop = cardJ.offsetTop;
         const jTriggerStart = jCardTop - stackPositionPx - props.itemStackDistance * j;
         if (scrollTop >= jTriggerStart) topCardIndex = j;
       }

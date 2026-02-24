@@ -110,7 +110,7 @@
 
     intersectionObserver = new IntersectionObserver(
         ([entry]) => {
-        if (entry.isIntersecting && !isInView.value) {
+        if (entry && entry.isIntersecting && !isInView.value) {
             isInView.value = true;
             startAnimation();
         }

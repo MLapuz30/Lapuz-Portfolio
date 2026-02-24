@@ -62,7 +62,7 @@
         
         <div class="cta-buttons">
           <button class="btn btn-primary" @click="viewResume">Download Resume</button>
-          <button class="btn btn-secondary">More about me</button>
+          <RouterLink to="/about" class="btn btn-secondary">More about me</RouterLink>
         </div>
       </div>
       
@@ -106,6 +106,7 @@
 
 <script setup lang="ts">
   import { ref, computed, onMounted, onUnmounted, watch, useTemplateRef } from 'vue';
+  import { RouterLink } from 'vue-router';
   import { Motion } from 'motion-v';
   import GradientBlinds from "../component/GradientBlinds.vue";
 
@@ -168,8 +169,8 @@
     const keys = new Set<string>([...Object.keys(from), ...steps.flatMap(step => Object.keys(step))]);
     const keyframes: Record<string, Array<string | number>> = {};
 
-    for (const key of keys) {
-      keyframes[key] = [from[key], ...steps.map(step => step[key])];
+    for (const key of Array.from(keys)) {
+      keyframes[key] = [from[key], ...steps.map(step => step[key])].filter((v): v is string | number => v !== undefined);
     }
 
     return keyframes;
@@ -199,7 +200,7 @@
 
     observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry && entry.isIntersecting) {
           inView.value = true;
           observer?.unobserve(headingRef.value as Element);
         }

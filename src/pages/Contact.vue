@@ -30,7 +30,7 @@
           v-for="(link, i) in contactLinks"
           :key="i"
           :href="link.href"
-          :ref="el => pillEls[i] = el"
+          :ref="el => assignPillEl(el, i)"
           class="contact-pill"
           target="_blank"
         >
@@ -122,6 +122,10 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
+
+function assignPillEl(el: unknown, i: number) {
+  pillEls.value[i] = (el instanceof Element) ? el : null;
+}
 
 const headerRef  = ref<HTMLElement | null>(null)
 const pillsRef   = ref<HTMLElement | null>(null)
