@@ -87,7 +87,7 @@
 
     <!-- ── STACKS ─────────────────────────────────────── -->
     <section class="content-section reveal-item">
-      <h2 class="section-title">Stacks</h2>
+      <h2 class="section-title">Tools</h2>
       <div class="stacks-grid">
         <div
           class="stack-card reveal-item"
@@ -234,7 +234,7 @@ const stacks = [
   { name: 'JavaScript',  icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', color: '#f7df1e' },
 ]
 const beyondItems = [
-  { title: 'Museum',          img: '/museum.webp',       size: 'tall' },
+  { title: 'Wandering',          img: '/museum.webp',       size: 'tall' },
   { title: 'Student Leader',  img: '/leader.webp',       size: 'wide' },
   { title: 'Photography',     img: '/photography.webp',  size: 'wide' },
   { title: 'Hosting',         img: '/hosting.webp',      size: 'wide' },
@@ -244,11 +244,12 @@ const beyondItems = [
 
 <style scoped>
 .page-root {
-  background: #0e0c0b;
-  color: #fff;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: 'Poppins', system-ui, sans-serif;
   min-height: 100vh;
   position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ── Atmospheric BG ─────────────────────────────────── */
@@ -329,8 +330,8 @@ const beyondItems = [
 .name-regular {
   font-family: 'Poppins', sans-serif; 
   font-size: clamp(3rem, 7vw, 4rem);
-  font-weight: 700; color: #fff; display: inline;
-  letter-spacing: -0.03em; text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  font-weight: 700; color: var(--text-primary); display: inline;
+  letter-spacing: -0.03em; text-shadow: 0 4px 12px var(--shadow-sm);
 }
 .name-serif {
   font-family: 'DM Serif Text', serif; 
@@ -340,15 +341,15 @@ const beyondItems = [
   letter-spacing: -0.05em; 
   line-height: 0.9; 
   display: inline;
-  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #e0c0c0 100%);
+  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #fba3a3 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-bio {
-  font-size: 0.97rem; line-height: 1.8; color: rgba(255,255,255,0.45);
+  font-size: 0.97rem; line-height: 1.8; color: var(--text-secondary);
   margin: 0 0 0.6rem; font-weight: 300;
 }
 .hero-bio em { color: #e0c0c0; font-style: italic; }
-.hero-sub { font-size: 0.8rem; color: rgba(255,255,255,0.22); letter-spacing: 0.04em; margin: 0; }
+.hero-sub { font-size: 0.8rem; color: var(--text-tertiary); opacity: 0.6; letter-spacing: 0.04em; margin: 0; }
 .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
 
 .btn {
@@ -359,12 +360,12 @@ const beyondItems = [
 }
 .btn-primary {
   background: linear-gradient(to bottom, #7f9b2f 0%, #67801F 40%, #5a6f1a 100%);
-  color: #fff; box-shadow: inset 0 2px 4px rgba(255,255,255,0.28), 0 4px 8px rgba(0,0,0,0.2);
+  color: #fff; box-shadow: inset 0 2px 4px rgba(255,255,255,0.28), 0 4px 8px var(--shadow-sm);
 }
 .btn-primary:hover { background: #485e08; transform: translateY(-2px); }
 .btn-secondary {
   background: rgba(61,59,59,0.14); backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.18); color: #fff;
+  border: 1px solid rgba(255,255,255,0.18); color: var(--text-primary);
 }
 .btn-secondary:hover {
   background: linear-gradient(135deg, rgba(103,128,31,0.15), rgba(236,100,160,0.1));
@@ -392,7 +393,7 @@ const beyondItems = [
   font-weight: 400; line-height: 1; color: #e0c0c0; margin-bottom: 6px;
 }
 .stat-label {
-  font-size: 0.67rem; color: rgba(255,255,255,0.25);
+  font-size: 0.67rem; color: var(--text-tertiary);
   text-transform: uppercase; letter-spacing: 0.09em; text-align: center;
 }
 
@@ -403,12 +404,12 @@ const beyondItems = [
 }
 .section-title {
   font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 700;
-  letter-spacing: -0.02em; margin: 0 0 2rem; color: #fff;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  letter-spacing: -0.02em; margin: 0 0 2rem; color: var(--text-primary);
+  text-shadow: 0 4px 12px var(--shadow-sm);
 }
 .section-title--center { text-align: center; }
 .section-sub {
-  text-align: center; font-size: 0.88rem; color: rgba(255,255,255,0.28);
+  text-align: center; font-size: 0.88rem; color: var(--text-secondary);
   margin: -1.25rem 0 2.5rem; font-weight: 300; line-height: 1.6;
 }
 
@@ -416,7 +417,7 @@ const beyondItems = [
 .skills-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
 .col-label {
   font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.2); margin: 0 0 1rem;
+  text-transform: uppercase; color: var(--text-tertiary); margin: 0 0 1rem;
 }
 .tag-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag {
@@ -428,13 +429,13 @@ const beyondItems = [
   border: 1px solid rgba(103,128,31,0.3); background: rgba(103,128,31,0.08); color: rgba(255,255,255,0.65);
 }
 .tag--olive:hover {
-  border-color: rgba(103,128,31,0.65); background: rgba(103,128,31,0.18); color: #fff; transform: translateY(-2px);
+  border-color: rgba(103,128,31,0.65); background: rgba(103,128,31,0.18); color: var(--text-primary); transform: translateY(-2px);
 }
 .tag--blush {
   border: 1px solid rgba(224,192,192,0.22); background: rgba(224,192,192,0.05); color: rgba(255,255,255,0.65);
 }
 .tag--blush:hover {
-  border-color: rgba(224,192,192,0.55); background: rgba(224,192,192,0.12); color: #fff; transform: translateY(-2px);
+  border-color: rgba(224,192,192,0.55); background: rgba(224,192,192,0.12); color: var(--text-primary); transform: translateY(-2px);
 }
 
 /* ── STACKS ─────────────────────────────────────────── */
@@ -460,7 +461,7 @@ const beyondItems = [
 }
 .stack-card.is-hovered .stack-icon-wrap { filter: drop-shadow(0 0 12px var(--glow)); transform: scale(1.1); }
 .stack-icon-wrap img { width: 100%; height: 100%; object-fit: contain; }
-.stack-name { font-size: 0.72rem; color: rgba(255,255,255,0.25); letter-spacing: 0.03em; transition: color 0.3s; }
+.stack-name { font-size: 0.72rem; color: var(--text-tertiary); letter-spacing: 0.03em; transition: color 0.3s; }
 .stack-card.is-hovered .stack-name { color: rgba(255,255,255,0.75); }
 
 /* ── BEYOND DEV ─────────────────────────────────────── */
@@ -491,7 +492,7 @@ const beyondItems = [
   opacity: 0; transition: opacity 0.4s ease;
 }
 .beyond-card:hover .beyond-overlay { opacity: 1; }
-.beyond-label { font-size: 0.88rem; font-weight: 600; color: #fff; }
+.beyond-label { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
 
 /* ── CTA ────────────────────────────────────────────── */
 .cta-section {
@@ -517,7 +518,7 @@ const beyondItems = [
 .cta-heading { margin: 0 0 1.5rem; line-height: 1.0; letter-spacing: -0.03em; }
 .cta-regular {
   font-family: 'Poppins', sans-serif; font-size: clamp(2.8rem, 7vw, 5.2rem);
-  font-weight: 700; color: #fff; display: inline; text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  font-weight: 700; color: var(--text-primary); display: inline; text-shadow: 0 4px 12px var(--shadow-sm);
 }
 .cta-serif {
   font-family: 'DM Serif Text', serif; font-style: italic; font-weight: 400;
@@ -526,7 +527,7 @@ const beyondItems = [
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .cta-body {
-  font-size: 0.93rem; line-height: 1.85; color: rgba(255,255,255,0.35); font-weight: 300; margin: 0 0 2.5rem;
+  font-size: 0.93rem; line-height: 1.85; color: var(--text-secondary); font-weight: 300; margin: 0 0 2.5rem;
 }
 .btn-cta {
   display: inline-flex; align-items: center; gap: 12px;

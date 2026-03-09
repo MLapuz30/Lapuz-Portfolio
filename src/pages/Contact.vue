@@ -202,12 +202,13 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 <style scoped>
 /* ── Base — matches index warm dark ───────────────── */
 .page-root {
-  background: #0e0c0b;
-  color: #fff;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: 'Poppins', system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ── Atmospheric BG ───────────────────────────────── */
@@ -277,19 +278,19 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 .contact-title {
   font-size: clamp(2.6rem, 6vw, 4.2rem);
   font-weight: 700; letter-spacing: -0.04em; line-height: 1.05;
-  margin: 0 0 1rem; color: #fff;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  margin: 0 0 1rem; color: var(--text-primary);
+  text-shadow: 0 4px 12px var(--shadow-sm);
 }
 .name-serif {
   font-family: 'DM Serif Text', serif;
   font-style: italic; font-weight: 400;
-  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #c8b08a 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #fba3a3 100%); 
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+
 }
 .contact-sub {
   font-size: 0.97rem; line-height: 1.75;
-  color: rgba(255,255,255,0.4); margin: 0; font-weight: 300;
+  color: var(--text-secondary); margin: 0; font-weight: 300;
 }
 
 /* ── Contact pills ────────────────────────────────── */
@@ -311,12 +312,12 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 .contact-pill:hover {
   border-color: rgba(103,128,31,0.5);
   background: rgba(103,128,31,0.08);
-  color: #fff; transform: translateY(-2px);
+  color: var(--text-primary); transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(103,128,31,0.14);
 }
 .pill-icon { color: #67801F; display: flex; align-items: center; flex-shrink: 0; }
 .pill-arrow {
-  margin-left: 4px; color: rgba(255,255,255,0.18);
+  margin-left: 4px; color: var(--text-tertiary);
   transition: color 0.25s, transform 0.25s;
 }
 .contact-pill:hover .pill-arrow { color: rgba(103,128,31,0.7); transform: translate(2px,-2px); }
@@ -331,7 +332,7 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 .divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
 .divider-label {
   font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(255,255,255,0.2); white-space: nowrap;
+  color: var(--text-tertiary); white-space: nowrap;
 }
 
 /* ── Form ─────────────────────────────────────────── */
@@ -347,7 +348,7 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 
 .field-label {
   font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: rgba(255,255,255,0.28);
+  text-transform: uppercase; color: var(--text-tertiary);
   transition: color 0.25s;
 }
 .form-field.is-focused .field-label { color: #67801F; }
@@ -358,7 +359,7 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px;
-  color: #fff; font-size: 0.9rem;
+  color: var(--text-primary); font-size: 0.9rem;
   font-family: 'Poppins', sans-serif; font-weight: 300;
   outline: none; resize: none; box-sizing: border-box;
   transition: border-color 0.25s, background 0.25s, box-shadow 0.3s;
@@ -390,7 +391,7 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
   font-family: 'Poppins', sans-serif; font-size: 0.92rem; font-weight: 600;
   color: #fff;
   background: linear-gradient(to bottom, #7f9b2f 0%, #67801F 40%, #5a6f1a 100%);
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.28), 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.28), 0 4px 12px var(--shadow-sm);
   transition: background 0.3s, transform 0.25s, box-shadow 0.3s;
 }
 .submit-btn:hover { background: #485e08; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(103,128,31,0.3); }

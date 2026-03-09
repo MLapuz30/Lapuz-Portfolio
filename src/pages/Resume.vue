@@ -338,7 +338,7 @@ const awards = [
 .title-serif {
   font-family: 'DM Serif Text', serif; font-style: italic; font-weight: 400;
   font-size: clamp(3.5rem, 9vw, 4.5rem); letter-spacing: -0.05em; line-height: 0.9; display: inline;
-  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #c8b08a 100%);
+  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #fba3a3 100%); 
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-sub {

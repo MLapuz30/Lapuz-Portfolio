@@ -84,13 +84,14 @@ onUnmounted(() => observer?.disconnect())
 <style scoped>
 .site-footer {
   position: relative; z-index: 20;
-  background: rgba(255,255,255,0.018);
-  border-top: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-color);
   padding: 4rem clamp(1.5rem, 8vw, 8rem) 3rem;
   font-family: 'Poppins', system-ui, sans-serif;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
   /* Reveal animation */
   opacity: 0; transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition: opacity 0.7s ease, transform 0.7s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 .site-footer.is-visible {
   opacity: 1; transform: translateY(0);
@@ -113,8 +114,8 @@ onUnmounted(() => observer?.disconnect())
 .footer-regular {
   font-family: 'Poppins', sans-serif;
   font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 700; color: #fff; display: inline;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  font-weight: 700; color: var(--text-primary); display: inline;
+  text-shadow: 0 4px 12px var(--shadow-sm);
 }
 .footer-serif {
   font-family: 'DM Serif Text', serif;
@@ -126,11 +127,11 @@ onUnmounted(() => observer?.disconnect())
   display: inline-block; padding-right: 0.1em; padding-bottom: 0.1em; margin-bottom: -0.1em;
 }
 .footer-sub {
-  font-size: 0.82rem; color: rgba(255,255,255,0.3);
+  font-size: 0.82rem; color: var(--text-tertiary);
   line-height: 1.7; font-weight: 300; margin: 0 0 1.5rem;
 }
 .footer-copy-inline {
-  font-size: 0.68rem; color: rgba(255,255,255,0.18);
+  font-size: 0.68rem; color: var(--text-tertiary); opacity: 0.6;
   letter-spacing: 0.04em; margin: 0;
 }
 

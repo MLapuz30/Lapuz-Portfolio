@@ -60,6 +60,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-color: #0e0c0b;
+  color: #ffffff;
   /* Remove scroll-behavior:smooth — Lenis handles smoothing on pages
      that use it. Native smooth-scroll conflicts with Lenis interpolation. */
 }
