@@ -176,7 +176,9 @@ const sendToBack = (id: number) => {
   const newCards = [...cards.value];
   const index = newCards.findIndex(card => card.id === id);
   const [card] = newCards.splice(index, 1);
-  newCards.unshift(card);
-  cards.value = newCards;
+  if (card) {
+    newCards.unshift(card);
+    cards.value = newCards;
+  }
 };
 </script>
