@@ -1,7 +1,6 @@
 <template>
   <div class="page-root">
-
-    <div class="page-bg">
+    <div class="page-bg" aria-hidden="true">
       <div class="bg-noise" />
       <div class="bg-orb bg-orb-1" />
       <div class="bg-orb bg-orb-2" />
@@ -9,16 +8,16 @@
     </div>
 
     <!-- ── HERO ───────────────────────────────────────── -->
-    <section class="hero-section">
-      <div class="photo-stack">
+    <section class="hero-section" aria-label="Introduction">
+      <div class="photo-stack" role="img" aria-label="Photos of Mary Micah Lapuz">
         <div class="photo-left">
-          <img src="/micah3.webp" alt="Mary Micah Lapuz" />
+          <img src="/micah3.webp" alt="Mary Micah Lapuz – candid shot" width="150" height="195" loading="eager" />
         </div>
         <div class="photo-center">
-          <img src="/micah2.webp" alt="Mary Micah Lapuz" />
+          <img src="/micah2.webp" alt="Mary Micah Lapuz – portrait" width="210" height="270" loading="eager" fetchpriority="high" />
         </div>
         <div class="photo-right">
-          <img src="/micah4.webp" alt="Mary Micah Lapuz" />
+          <img src="/micah4.webp" alt="Mary Micah Lapuz – lifestyle shot" width="150" height="195" loading="eager" />
         </div>
       </div>
 
@@ -28,7 +27,7 @@
           <span class="name-regular">Lapuz</span>
         </h1>
         <p class="hero-bio">
-          A multidisciplinary designer and front-end developer who creates clear, 
+          A multidisciplinary designer and front-end developer who creates clear,
           visually refined, and highly functional digital experiences.
           Work that doesn't just look good — it <em>feels</em> right.
         </p>
@@ -36,14 +35,14 @@
           Based in Angeles City, PH &nbsp;·&nbsp; Remote-friendly &nbsp;·&nbsp; Open for freelance
         </p>
         <div class="hero-actions">
-          <a href="/contact" class="btn btn-primary">Get in touch</a>
-          <a href="/projects" class="btn btn-secondary">View work</a>
+          <a href="/contact" class="btn btn-primary" aria-label="Contact Mary Micah Lapuz">Get in touch</a>
+          <a href="/projects" class="btn btn-secondary" aria-label="View Mary Micah Lapuz's work">View work</a>
         </div>
       </div>
     </section>
 
     <!-- ── STATS ──────────────────────────────────────── -->
-    <section class="stats-section">
+    <section class="stats-section" aria-label="Key statistics">
       <div class="stats-row">
         <div
           class="stat-item reveal-item"
@@ -51,12 +50,12 @@
           :key="i"
           :style="{ transitionDelay: `${i * 0.1}s` }"
         >
-          <span class="stat-num">
+          <span class="stat-num" aria-label="`${s.value} ${s.label}`">
             <CountUp
               :from="0"
               :to="parseInt(String(s.value).replace(/[^\d]/g, ''))"
               :duration="1.2"
-              separator="," 
+              separator=","
               class-name="stat-num"
             />
             <template v-if="/[^\d]/.test(s.value)">{{ String(s.value).replace(/^[\d]+/, '') }}</template>
@@ -67,26 +66,26 @@
     </section>
 
     <!-- ── SKILLS ─────────────────────────────────────── -->
-    <section class="content-section reveal-item">
+    <section class="content-section reveal-item" aria-label="Skills">
       <h2 class="section-title">Skills</h2>
       <div class="skills-cols">
         <div class="skill-col">
           <p class="col-label">Technical</p>
-          <div class="tag-wrap">
-            <span class="tag tag--olive" v-for="s in technicalSkills" :key="s">{{ s }}</span>
+          <div class="tag-wrap" role="list" aria-label="Technical skills">
+            <span class="tag tag--olive" role="listitem" v-for="s in technicalSkills" :key="s">{{ s }}</span>
           </div>
         </div>
         <div class="skill-col">
           <p class="col-label">Soft</p>
-          <div class="tag-wrap">
-            <span class="tag tag--blush" v-for="s in softSkills" :key="s">{{ s }}</span>
+          <div class="tag-wrap" role="list" aria-label="Soft skills">
+            <span class="tag tag--blush" role="listitem" v-for="s in softSkills" :key="s">{{ s }}</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ── STACKS ─────────────────────────────────────── -->
-    <section class="content-section reveal-item">
+    <section class="content-section reveal-item" aria-label="Tools and technologies">
       <h2 class="section-title">Tools</h2>
       <div class="stacks-grid">
         <div
@@ -94,11 +93,12 @@
           v-for="(stack, i) in stacks"
           :key="stack.name"
           :style="{ '--glow': stack.color, transitionDelay: `${i * 0.06}s` }"
+          :aria-label="stack.name"
           @mouseenter="(e) => (e.currentTarget as HTMLElement).classList.add('is-hovered')"
           @mouseleave="(e) => (e.currentTarget as HTMLElement).classList.remove('is-hovered')"
         >
           <div class="stack-icon-wrap">
-            <img :src="stack.icon" :alt="stack.name" />
+            <img :src="stack.icon" :alt="`${stack.name} logo`" width="46" height="46" loading="lazy" />
           </div>
           <span class="stack-name">{{ stack.name }}</span>
         </div>
@@ -106,13 +106,13 @@
     </section>
 
     <!-- ── BEYOND DEV ─────────────────────────────────── -->
-    <section class="content-section beyond-section reveal-item">
+    <section class="content-section beyond-section reveal-item" aria-label="Hobbies and interests">
       <h2 class="section-title section-title--center">Beyond Dev</h2>
-      <p class="section-sub">More than just a developer, I'm someone who immerses myself in the things I love. 
-        My wide range of hobbies and interests reflects a multifaceted personality. 
-        Beyond coding, I enjoy exploring leadership opportunities and engaging in extracurricular activities. 
-        I have a particular passion for photography, especially with a vintage or 1920s film aesthetic. 
-        I love embracing new experiences, often stepping outside my comfort zone, and 
+      <p class="section-sub">More than just a developer, I'm someone who immerses myself in the things I love.
+        My wide range of hobbies and interests reflects a multifaceted personality.
+        Beyond coding, I enjoy exploring leadership opportunities and engaging in extracurricular activities.
+        I have a particular passion for photography, especially with a vintage or 1920s film aesthetic.
+        I love embracing new experiences, often stepping outside my comfort zone, and
         I find joy in traveling, journaling, and crafting.</p>
       <div class="beyond-grid">
         <div
@@ -122,8 +122,8 @@
           :class="item.size"
           :style="{ transitionDelay: `${i * 0.08}s` }"
         >
-          <img :src="item.img" :alt="item.title" class="beyond-img" />
-          <div class="beyond-overlay">
+          <img :src="item.img" :alt="`Mary Micah Lapuz – ${item.title}`" class="beyond-img" loading="lazy" />
+          <div class="beyond-overlay" aria-hidden="true">
             <span class="beyond-label">{{ item.title }}</span>
           </div>
         </div>
@@ -131,8 +131,8 @@
     </section>
 
     <!-- ── CTA ───────────────────────────────────────── -->
-    <section class="cta-section reveal-item">
-      <div class="cta-divider">
+    <section class="cta-section reveal-item" aria-label="Call to action – hire Mary Micah Lapuz">
+      <div class="cta-divider" aria-hidden="true">
         <span class="cta-divider-line" />
         <span class="cta-divider-orb" />
         <span class="cta-divider-line" />
@@ -146,14 +146,13 @@
           I'm actively seeking full-time and contract opportunities. If you're looking for a designer and engineer
           who brings both creative vision and technical execution, let's explore how I can contribute to your team.
         </p>
-        <a href="/contact" class="btn btn-cta">
+        <a href="/contact" class="btn btn-cta" aria-label="Start a conversation with Mary Micah Lapuz">
           <span class="btn-cta-text">Start a conversation</span>
-          <span class="btn-cta-arrow">→</span>
+          <span class="btn-cta-arrow" aria-hidden="true">→</span>
         </a>
       </div>
-      <div class="cta-glow" />
+      <div class="cta-glow" aria-hidden="true" />
     </section>
-
   </div>
 </template>
 
@@ -162,14 +161,12 @@ import Lenis from 'lenis'
 import { onMounted, onBeforeUnmount } from 'vue'
 import CountUp from '../component/CountUp.vue'
 
-// ── Lenis on window — preserves normal document flow ──
-// Footer, nav, everything stacks correctly because the page
-// is NOT position:fixed. Lenis just intercepts wheel events.
+// Lenis targets window (no wrapper prop) so the normal document flow is preserved —
+// footer, nav, and fixed elements all stack correctly.
 let lenis: Lenis | null = null
 let rafId: number | null = null
 
 onMounted(() => {
-  // No wrapper/content props → Lenis targets the window
   lenis = new Lenis({
     duration: 1.2,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -187,7 +184,7 @@ onMounted(() => {
   }
   rafId = requestAnimationFrame(raf)
 
-  // Reveal — root: null means viewport (correct for window scroll)
+  // root:null → viewport, correct for window-level scroll
   const io = new IntersectionObserver(
     (entries) => entries.forEach((e) => {
       if (e.isIntersecting) {
@@ -208,37 +205,45 @@ onBeforeUnmount(() => {
 
 // ── Data ─────────────────────────────────────────────
 const stats = [
-  { value: '4+', label: 'Projects Delivered'  },
-  { value: '100%',  label: 'Internship Ready' },
-  { value: '8',   label: 'Certificates'        },
+  { value: '4+',   label: 'Projects Delivered' },
+  { value: '100%', label: 'Internship Ready'   },
+  { value: '8',    label: 'Certificates'        },
 ]
+
 const technicalSkills = [
-  'UI/UX Design', 'Front-End Dev', 'Vue.js', 'React',
-  'Figma', 'TailwindCSS', 'TypeScript', 'Node.js',
+  'UI/UX', 'JavaScript', 'Vue.js', 'Figma',
+  'HTML', 'TailwindCSS', 'Shadcn', 'Node.js',
   'Responsive Design', 'Motion Design', 'User Flow',
   'Prototyping', 'Wireframing', 'Brand Identity',
 ]
+
 const softSkills = [
   'Creative Direction', 'Communication', 'Problem Solving',
   'Adaptability', 'Collaboration', 'Time Management',
   'Attention to Detail', 'Critical Thinking', 'Multitasking', 'Perseverance',
 ]
+
 const stacks = [
-  { name: 'Vue.js',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',           color: '#42d392' },
-  { name: 'React',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',           color: '#61dafb' },
-  { name: 'TypeScript',  icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', color: '#3178c6' },
-  { name: 'Figma',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',           color: '#9129F3' },
-  { name: 'TailwindCSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',  color: '#38bdf8' },
-  { name: 'Node.js',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',         color: '#68a063' },
-  { name: 'Git',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',               color: '#f05032' },
-  { name: 'JavaScript',  icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', color: '#f7df1e' },
+  { name: 'VSCode',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg',                    color: '#007acc' },
+  { name: 'Figma',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',                      color: '#9129F3' },
+  { name: 'WordPress',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg',          color: '#21759b' },
+  { name: 'Git',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',                          color: '#f05032' },
+  { name: 'HTML5',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',                      color: '#e34f26' },
+  { name: 'CSS3',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',                        color: '#1572b6' },
+  { name: 'Vue.js',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',                      color: '#42d392' },
+  { name: 'Angular',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg',              color: '#dd0031' },
+  { name: 'TailwindCSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',   color: '#38bdf8' },
+  { name: 'Shadcn',      icon: 'https://cdn.simpleicons.org/shadcnui',                                                             color: '#e0c0c0' },
+  { name: 'Node.js',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',                    color: '#68a063' },
+  { name: 'JavaScript',  icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',            color: '#f7df1e' },
 ]
+
 const beyondItems = [
-  { title: 'Wandering',          img: '/museum.webp',       size: 'tall' },
-  { title: 'Student Leader',  img: '/leader.webp',       size: 'wide' },
-  { title: 'Photography',     img: '/photography.webp',  size: 'wide' },
-  { title: 'Hosting',         img: '/hosting.webp',      size: 'wide' },
-  { title: 'Exploring',       img: '/explore.webp',      size: ''     },
+  { title: 'Wandering',      img: '/museum.webp',      size: 'tall' },
+  { title: 'Student Leader', img: '/leader.webp',      size: 'wide' },
+  { title: 'Photography',    img: '/photography.webp', size: 'wide' },
+  { title: 'Hosting',        img: '/hosting.webp',     size: 'wide' },
+  { title: 'Exploring',      img: '/explore.webp',     size: ''     },
 ]
 </script>
 

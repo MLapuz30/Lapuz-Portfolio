@@ -16,7 +16,7 @@
           Get to know me
         </p>
         <h1 class="hero-title">
-          <span class="title-regular">Mary </span><span class="title-serif">Micah </span> 
+          <span class="title-regular">Mary </span><span class="title-serif">Micah </span>
           <span class="title-regular">Lapuz</span>
         </h1>
         <p class="hero-sub">
@@ -105,7 +105,14 @@
         >
           <div class="cert-issuer">{{ group.issuer }}</div>
           <div class="cert-list">
-            <div class="cert-item" v-for="(cert, ci) in group.items" :key="ci">
+            <div
+              class="cert-item cert-clickable"
+              v-for="(cert, ci) in group.items"
+              :key="ci"
+              @mousemove="onCertMouseMove($event)"
+              @mouseleave="onCertMouseLeave"
+              @click="openCertModal(cert)"
+            >
               <div class="timeline-node"><span class="node-ring" /><span class="node-dot" /></div>
               <div class="cert-content">
                 <span class="cert-name">{{ cert.name }}</span>
@@ -145,21 +152,107 @@
     </section>
 
   </div>
+
+  <!-- ── CURSOR LABEL ──────────────────────────────────── -->
+  <Teleport to="body">
+    <div
+      v-if="cursorLabel.visible"
+      class="cursor-label"
+      :style="{ left: cursorLabel.x + 'px', top: cursorLabel.y + 'px' }"
+    >
+      <div style="background: white; padding: 6px 12px; font-size: 11px; font-family: serif; letter-spacing: 0.03em; color: #111; white-space: nowrap;">
+        view certificate
+      </div>
+    </div>
+
+    <!-- ── CERT MODAL ──────────────────────────────────── -->
+    <Transition name="modal-fade">
+      <div
+        v-if="certModal.open"
+        class="cert-modal-overlay"
+        @click.self="closeCertModal"
+      >
+        <div class="cert-modal">
+          <button class="cert-modal-close" @click="closeCertModal">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="cert-modal-header">
+            <span class="cert-modal-issuer">{{ certModal.cert?.issuer }}</span>
+            <h3 class="cert-modal-name">{{ certModal.cert?.name }}</h3>
+            <span class="cert-modal-year">{{ certModal.cert?.year }}</span>
+          </div>
+          <div class="cert-modal-img-wrap">
+            <img
+              :src="certModal.cert?.image"
+              :alt="certModal.cert?.name"
+              class="cert-modal-img"
+            />
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
-// View Resume in new tab (same as home page)
-const viewResume = () => {
-  window.open('/Mary Micah Lapuz - Resume.pdf', '_blank');
-};
+import { reactive, onMounted, onBeforeUnmount } from 'vue'
 import Lenis from 'lenis'
-import { onMounted, onBeforeUnmount } from 'vue'
 
-// ── Lenis on window — preserves normal document flow ──
+// ── View Resume ───────────────────────────────────────
+const viewResume = () => {
+  window.open('/Mary Micah Lapuz - Resume.pdf', '_blank')
+}
+
+// ── Lenis smooth scroll ───────────────────────────────
 let lenis: Lenis | null = null
 let rafId: number | null = null
 
+// ── Cursor label state ────────────────────────────────
+const cursorLabel = reactive({ visible: false, x: 0, y: 0 })
+
+const onCertMouseMove = (e: MouseEvent) => {
+  cursorLabel.visible = true
+  cursorLabel.x = e.clientX + 16
+  cursorLabel.y = e.clientY + 16
+}
+
+const onCertMouseLeave = () => {
+  cursorLabel.visible = false
+}
+
+// ── Modal state ───────────────────────────────────────
+interface CertItem {
+  name: string
+  year: string
+  issuer: string
+  image: string
+}
+
+const certModal = reactive<{ open: boolean; cert: CertItem | null }>({
+  open: false,
+  cert: null
+})
+
+const openCertModal = (cert: CertItem) => {
+  certModal.cert = cert
+  certModal.open = true
+  document.body.style.overflow = 'hidden'
+}
+
+const closeCertModal = () => {
+  certModal.open = false
+  document.body.style.overflow = ''
+}
+
+// ── Keyboard close ────────────────────────────────────
+const onKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape') closeCertModal()
+}
+
 onMounted(() => {
+  // Lenis
   lenis = new Lenis({
     duration: 1.2,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -177,6 +270,7 @@ onMounted(() => {
   }
   rafId = requestAnimationFrame(raf)
 
+  // Scroll reveal
   const io = new IntersectionObserver(
     (entries) => entries.forEach((e) => {
       if (e.isIntersecting) {
@@ -187,12 +281,16 @@ onMounted(() => {
     { threshold: 0.08 }
   )
   document.querySelectorAll('.reveal-item').forEach((el) => io.observe(el))
+
+  // Escape key listener
+  window.addEventListener('keydown', onKeyDown)
 })
 
 onBeforeUnmount(() => {
   if (rafId) cancelAnimationFrame(rafId)
   lenis?.destroy()
   lenis = null
+  window.removeEventListener('keydown', onKeyDown)
 })
 
 // ── Data ─────────────────────────────────────────────
@@ -200,56 +298,104 @@ const education = [
   {
     org: 'Holy Angel University',
     title: 'Bachelor of Science in Information Technology with Specialization in Web Development',
-    period: '2023–Present', desc: ''
+    period: '2023–Present',
+    desc: ''
   },
   {
     org: '',
     title: 'Senior High School, Technical-Vocational-Livelihood (TVL) with a specialization in Information and Communications Technology (ICT)',
-    period: '2021–2023', desc: ''
+    period: '2021–2023',
+    desc: ''
   }
 ]
+
 const experience = [
   {
     org: ['Code Geeks,', 'Holy Angel University'],
-    title: 'President', period: '2025–Present',
+    title: 'President',
+    period: '2025–Present',
     desc: 'Lead a university-based organization dedicated to advancing web development skills and industry knowledge among students. Provides strategic leadership and direction in fostering a collaborative learning environment, organizing technical workshops and activities, and promoting excellence in modern development practices within the campus community.'
   },
   {
     org: ['School of Computing', 'Student Council,', 'Holy Angel University'],
-    title: 'External Communication', period: '2024–2025',
+    title: 'External Communication',
+    period: '2024–2025',
     desc: "Handled the council's marketing and communication initiatives, including social media management, branding, partnerships, and sponsorship coordination. Responsible for building and maintaining external relationships, promoting student-led events and programs, and enhancing the organization's public presence through strategic communication and content development."
   },
   {
     org: ['Student Executive', 'Committee,', 'Holy Angel University'],
-    title: 'Public Relations Officer', period: '2022–2023',
+    title: 'Public Relations Officer',
+    period: '2022–2023',
     desc: "Oversaw communication efforts that strengthen the organization's public image and stakeholder relationships. Managed media outreach, event promotion, and content development, while supporting collaborations, partnerships, and community engagement initiatives."
   }
 ]
+
 const certificates = [
   {
     issuer: 'Hubspot',
     items: [
-      { name: 'Content Marketing', year: '2023–2024' },
-      { name: 'Digital Marketing', year: '2023–2024' }
+      {
+        name: 'Content Marketing',
+        year: '2023–2024',
+        issuer: 'Hubspot',
+        image: '/certs/hubspot-content.png'
+      },
+      {
+        name: 'Digital Marketing',
+        year: '2023–2024',
+        issuer: 'Hubspot',
+        image: '/certs/hubspot-digital.png'
+      }
     ]
   },
   {
     issuer: 'Simplilearn',
     items: [
-      { name: 'Design Thinking for Beginners', year: '2023–2024' },
-      { name: 'Introduction to Graphic Design', year: '2023–2024' },
-      { name: 'Website UI/UX Designing using ChatGPT', year: '2023–2024' }
+      {
+        name: 'Design Thinking for Beginners',
+        year: '2023–2024',
+        issuer: 'Simplilearn',
+        image: '/certs/simplilearn-design.png'
+      },
+      {
+        name: 'Introduction to Graphic Design',
+        year: '2023–2024',
+        issuer: 'Simplilearn',
+        image: '/certs/simplilearn-graphics.png'
+      },
+      {
+        name: 'Website UI/UX Designing using ChatGPT',
+        year: '2023–2024',
+        issuer: 'Simplilearn',
+        image: '/certs/simplilearn-chatgpt.png'
+      }
     ]
   },
   {
     issuer: 'FreeCodeCamp',
     items: [
-      { name: 'Backend Development and APIs', year: '2023–2024' },
-      { name: 'Legacy JavaScript Algorithms and Data Structure', year: '2023–2024' },
-      { name: 'Responsive Design', year: '2023–2024' }
+      {
+        name: 'Backend Development and APIs',
+        year: '2023–2024',
+        issuer: 'FreeCodeCamp',
+        image: '/certs/fcc-backend.png'
+      },
+      {
+        name: 'Legacy JavaScript Algorithms and Data Structure',
+        year: '2023–2024',
+        issuer: 'FreeCodeCamp',
+        image: '/certs/fcc-javascript.png'
+      },
+      {
+        name: 'Responsive Design',
+        year: '2023–2024',
+        issuer: 'FreeCodeCamp',
+        image: '/certs/fcc-responsive.png'
+      }
     ]
   }
 ]
+
 const awards = [
   { name: "President's Lister",                 year: '2023–2024' },
   { name: "Dean's Lister",                       year: '2023–2024' },
@@ -259,7 +405,7 @@ const awards = [
 </script>
 
 <style scoped>
-/* Resume actions button group */
+/* ── Resume actions ─────────────────────────────────── */
 .resume-actions {
   display: flex;
   gap: 1rem;
@@ -267,7 +413,8 @@ const awards = [
   margin-top: 2.2rem;
   margin-bottom: 1.5rem;
 }
-/* ── Base: normal flow, no position:fixed ───────────── */
+
+/* ── Base ───────────────────────────────────────────── */
 .page-root {
   background: #0e0c0b;
   color: #fff;
@@ -290,7 +437,7 @@ const awards = [
 }
 .bg-orb-2 {
   width: 440px; height: 440px;
-  background: radial-gradient(circle, rgba(223, 139, 175, 0.13), transparent 80%);
+  background: radial-gradient(circle, rgba(223,139,175,0.13), transparent 80%);
   top: 40%; right: -80px; animation: orb2 22s ease-in-out infinite;
 }
 .bg-orb-3 {
@@ -320,8 +467,8 @@ const awards = [
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
   color: #e0c0c0; padding: 6px 16px;
-  border: 1px solid rgba(232, 152, 187, 0.25); border-radius: 999px;
-  background: rgba(237, 167, 198, 0.06); margin-bottom: 1.75rem;
+  border: 1px solid rgba(232,152,187,0.25); border-radius: 999px;
+  background: rgba(237,167,198,0.06); margin-bottom: 1.75rem;
 }
 .eyebrow-dot {
   width: 6px; height: 6px; border-radius: 50%;
@@ -331,14 +478,14 @@ const awards = [
 @keyframes pulse { 0%,100%{transform:scale(1);opacity:.7} 50%{transform:scale(1.5);opacity:1} }
 .hero-title { margin: 0 0 1.5rem; line-height: 1.0; }
 .title-regular {
-  font-family: 'Poppins', sans-serif; font-size: clamp(3rem, 7vw, 4rem);
+  font-family: 'Poppins', sans-serif; font-size: clamp(3rem,7vw,4rem);
   font-weight: 700; color: #fff; display: inline;
   letter-spacing: -0.03em; text-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 .title-serif {
   font-family: 'DM Serif Text', serif; font-style: italic; font-weight: 400;
-  font-size: clamp(3.5rem, 9vw, 4.5rem); letter-spacing: -0.05em; line-height: 0.9; display: inline;
-  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #fba3a3 100%); 
+  font-size: clamp(3.5rem,9vw,4.5rem); letter-spacing: -0.05em; line-height: 0.9; display: inline;
+  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #fba3a3 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-sub {
@@ -359,7 +506,10 @@ const awards = [
   opacity: 0; transition: opacity 0.3s;
 }
 .btn-download:hover::before { opacity: 1; }
-.btn-download:hover { border-color: rgba(103,128,31,0.5); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(103,128,31,0.2); }
+.btn-download:hover {
+  border-color: rgba(103,128,31,0.5); transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(103,128,31,0.2);
+}
 .btn-download-icon {
   display: flex; align-items: center; justify-content: center;
   width: 28px; height: 28px; border-radius: 50%;
@@ -368,14 +518,6 @@ const awards = [
 }
 .btn-download:hover .btn-download-icon { background: rgba(103,128,31,0.35); }
 .btn-download span:last-child { position: relative; z-index: 1; }
-.hero-lines { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.h-line {
-  position: absolute; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(103,128,31,0.2), transparent);
-}
-.h-line-1 { width: 60%; top: 30%; left: -10%; animation: lineDrift 12s ease-in-out infinite; }
-.h-line-2 { width: 40%; bottom: 25%; right: -5%; animation: lineDrift 16s ease-in-out infinite reverse; }
-@keyframes lineDrift { 0%,100%{transform:translateX(0);opacity:.4} 50%{transform:translateX(40px);opacity:.8} }
 
 /* ── Resume sections ────────────────────────────────── */
 .resume-section {
@@ -435,7 +577,8 @@ const awards = [
 .cert-groups { display: flex; flex-direction: column; }
 .cert-group { display: grid; grid-template-columns: 200px 1fr; gap: 0 2rem; padding-bottom: 2.5rem; }
 .cert-issuer {
-  font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.55); padding-top: 2px; letter-spacing: 0.01em;
+  font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.55);
+  padding-top: 2px; letter-spacing: 0.01em;
 }
 .cert-list { display: flex; flex-direction: column; gap: 1rem; }
 .cert-item { display: flex; align-items: flex-start; gap: 1.25rem; }
@@ -444,6 +587,25 @@ const awards = [
 .cert-year {
   font-size: 0.65rem; font-weight: 500; color: #e0c0c0;
   letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* ── Cert clickable ─────────────────────────────────── */
+.cert-clickable {
+  cursor: none;
+  transition: opacity 0.2s ease;
+}
+.cert-clickable:hover .cert-name {
+  color: #e0c0c0;
+  transition: color 0.2s ease;
+}
+.cert-clickable:hover .node-dot {
+  background: #e0c0c0;
+  box-shadow: 0 0 10px rgba(224,192,192,0.6);
+  transition: all 0.2s ease;
+}
+.cert-clickable:hover .node-ring {
+  border-color: rgba(224,192,192,0.5);
+  transition: all 0.2s ease;
 }
 
 /* ── Awards ─────────────────────────────────────────── */
@@ -456,19 +618,126 @@ const awards = [
   letter-spacing: 0.08em; text-transform: uppercase;
 }
 
+/* ── Cursor label ────────────────────────────────────── */
+.cursor-label {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+}
+
+/* ── Modal overlay ───────────────────────────────────── */
+.cert-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.cert-modal {
+  position: relative;
+  background: #161412;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 780px;
+  width: 100%;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(103,128,31,0.15);
+}
+.cert-modal-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cert-modal-close:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+.cert-modal-header { margin-bottom: 1.5rem; }
+.cert-modal-issuer {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #e0c0c0;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.cert-modal-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0.3rem;
+  padding-right: 2.5rem;
+}
+.cert-modal-year {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.cert-modal-img-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: #0e0c0b;
+}
+.cert-modal-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Modal transition ────────────────────────────────── */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.modal-fade-enter-active .cert-modal,
+.modal-fade-leave-active .cert-modal {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to { opacity: 0; }
+.modal-fade-enter-from .cert-modal,
+.modal-fade-leave-to .cert-modal {
+  transform: scale(0.95) translateY(12px);
+  opacity: 0;
+}
+
 /* ── Responsive ─────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero-section { padding: 100px 1.5rem 5rem; }
-  .title-regular { font-size: clamp(2.2rem, 8vw, 3.5rem); }
-  .title-serif   { font-size: clamp(2.8rem, 10vw, 3rem); }
+  .title-regular { font-size: clamp(2.2rem,8vw,3.5rem); }
+  .title-serif   { font-size: clamp(2.8rem,10vw,3rem); }
   .timeline-item, .cert-group { grid-template-columns: 1fr; gap: 0.5rem 0; }
   .timeline-item:not(:last-child)::after { display: none; }
   .timeline-org, .cert-issuer {
     font-size: 0.7rem; color: #e0c0c0;
     text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;
   }
+  .cert-modal { padding: 1.5rem; }
+  .cert-modal-name { font-size: 1rem; }
 }
 @media (max-width: 480px) {
   .resume-section { padding: 0 1.25rem 4rem; }
+  .cert-modal-overlay { padding: 1rem; }
 }
 </style>

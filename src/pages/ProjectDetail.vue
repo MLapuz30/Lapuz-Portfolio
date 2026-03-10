@@ -1284,29 +1284,55 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .detail-nav { padding: 1rem 4vw; }
-  .nav-title { font-size: 0.95rem; }
+  .nav-title { font-size: 0.9rem; }
+  .nav-year { font-size: 0.8rem; padding: 0.4rem 0.75rem; }
   .screen { padding: 4rem 4vw 2rem; }
   .screen-hero { padding: 0; }
-  .hero-content { padding: 1.5rem; }
-  .screen-heading { font-size: 1.5rem; }
-  .hero-title { font-size: clamp(1.75rem, 6vw, 2.5rem); }
-  .hero-subtitle { font-size: 0.875rem; }
+  .hero-content { padding: 2rem 1.5rem; gap: 1rem; }
+  .hero-pill { font-size: 0.55rem; letter-spacing: 0.12em; padding: 0.45rem 1rem; gap: 0.5rem; }
+  .hero-title { font-size: clamp(2.25rem, 8vw, 3.5rem); letter-spacing: -0.15rem; }
+  .hero-subtitle { font-size: 0.8rem; line-height: 1.65; }
+  .hero-tech-pill { font-size: 0.7rem; padding: 0.35rem 0.8rem; }
+  .hero-tech-pills { flex-wrap: wrap; justify-content: center; gap: 0.4rem; }
+  .hero-bottom-row { flex-wrap: wrap; gap: 0.75rem; }
+  .hero-team-stamp-count { font-size: 0.65rem; }
+  .cta-eyebrow { font-size: 0.6rem; }
+  .cta-main-label { font-size: 0.95rem; }
+  .cta-arrow-circle { width: 26px; height: 26px; }
+  .screen-heading { font-size: 1.4rem; }
+  .overview-block-details .overview-text { font-size: 0.95rem; line-height: 1.8; }
+  .overview-text { font-size: 0.95rem; line-height: 1.8; }
+  .details-title { font-size: 0.9rem; }
+  .details-list li { font-size: 0.82rem; }
+  .cs-label { font-size: 0.65rem; }
+  .cs-text { font-size: 0.85rem; }
+  .outcome-badge { font-size: 0.68rem; padding: 0.5rem 1.2rem; }
+  .outcome-text { font-size: 0.9rem; line-height: 1.8; }
+  .bento-heading { font-size: 1.1rem; }
+  .bento-subheading { font-size: 0.875rem; }
   .bento-grid { grid-template-columns: 1fr; grid-auto-rows: 250px; }
   .bento-large, .bento-tall, .bento-wide { grid-column: span 1; grid-row: span 1; }
-  .hero-tech-pills { flex-wrap: wrap; justify-content: center; }
-  .hero-bottom-row { flex-wrap: wrap; gap: 0.75rem; }
 }
 
 @media (max-width: 480px) {
   .detail-nav { padding: 0.875rem 3vw; flex-wrap: wrap; gap: 0.5rem; }
-  .nav-back { padding: 0.5rem 1rem; font-size: 0.85rem; }
-  .nav-title { font-size: 0.875rem; flex-basis: 100%; order: -1; }
+  .nav-back { padding: 0.5rem 1rem; font-size: 0.82rem; }
+  .nav-title { font-size: 0.82rem; flex-basis: 100%; order: -1; }
+  .nav-year { font-size: 0.75rem; }
   .screen { padding: 4rem 3vw 2rem; }
-  .hero-pill { font-size: 0.65rem; padding: 0.4rem 1rem; }
-  .hero-subtitle { font-size: 0.85rem; }
-  .details-col, .cs-item { padding: 1.5rem; }
-  .details-list li { font-size: 0.8rem; }
-  .cs-text { font-size: 0.85rem; }
-  .hero-cta-link { font-size: 0.8rem; padding: 0.75rem 1.4rem; }
+  .hero-content { padding: 1.75rem 1.25rem; gap: 0.9rem; }
+  .hero-pill { font-size: 0.5rem; letter-spacing: 0.1em; padding: 0.4rem 0.9rem; }
+  .hero-title { font-size: clamp(2rem, 7vw, 2.75rem); letter-spacing: -0.1rem; }
+  .hero-subtitle { font-size: 0.78rem; line-height: 1.6; }
+  .hero-tech-pill { font-size: 0.68rem; padding: 0.3rem 0.7rem; }
+  .cta-eyebrow { font-size: 0.58rem; }
+  .cta-main-label { font-size: 0.88rem; }
+  .details-col, .cs-item { padding: 1.25rem; }
+  .details-list li { font-size: 0.78rem; }
+  .cs-text { font-size: 0.82rem; }
+  .overview-block-details .overview-text { font-size: 0.875rem; }
+  .outcome-text { font-size: 0.875rem; }
+  .outcome-link { font-size: 0.75rem; padding: 0.5rem 1.1rem; }
+  .section-label .label-text { font-size: 0.75rem; }
 }
 </style>
