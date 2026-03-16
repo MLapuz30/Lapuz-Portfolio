@@ -129,8 +129,10 @@
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 
 // ── Environment variable (set VITE_WEB3FORMS_ACCESS_KEY in Vercel) ──
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined
-const envKeyMissing = computed(() => !WEB3FORMS_KEY)
+const WEB3FORMS_KEY = String(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? '')
+  .trim()
+  .replace(/^['\"]|['\"]$/g, '')
+const envKeyMissing = computed(() => WEB3FORMS_KEY.length === 0)
 
 // ── Refs ────────────────────────────────────────────────────────────
 function assignPillEl(el: unknown, i: number) {
