@@ -90,7 +90,7 @@
 
         <!-- Error banner for missing env key (dev safety net) -->
         <div class="env-error" v-if="envKeyMissing">
-          ⚠️ Web3Forms access key is not configured. Set <code>VITE_WEB3FORMS_ACCESS_KEY</code> in your environment variables.
+          ⚠️ Web3Forms key is not configured. Set <code>VITE_WEB3FORMS_PUBLIC_KEY</code> in your environment variables.
         </div>
 
         <button type="submit" class="submit-btn" :class="{ 'is-loading': isLoading, 'is-sent': isSent }" :disabled="isLoading || isSent">
@@ -128,8 +128,12 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 
-// ── Environment variable (set VITE_WEB3FORMS_ACCESS_KEY in Vercel) ──
-const WEB3FORMS_KEY = String(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? '')
+// ── Environment variable (set VITE_WEB3FORMS_PUBLIC_KEY in Vercel) ──
+const WEB3FORMS_KEY = String(
+  import.meta.env.VITE_WEB3FORMS_PUBLIC_KEY
+  ?? import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+  ?? ''
+)
   .trim()
   .replace(/^['\"]|['\"]$/g, '')
 const envKeyMissing = computed(() => WEB3FORMS_KEY.length === 0)
