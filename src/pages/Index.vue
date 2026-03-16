@@ -9,9 +9,9 @@
     aria-label="Hero section — Micah Lapuz, Frontend Developer and UI/UX Designer"
     role="region"
   >
-    <!-- Background: interactive grid distortion using /bg.JPG -->
+    <!-- Background: interactive grid distortion using /bg.webp -->
     <GridDistortion
-      imageSrc="/bg.JPG"
+      imageSrc="/bg.webp"
       :grid="10"
       :mouse="0.1"
       :strength="0.15"

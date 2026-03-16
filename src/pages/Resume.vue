@@ -338,13 +338,13 @@ const certificates = [
         name: 'Content Marketing',
         year: '2023–2024',
         issuer: 'Hubspot',
-        image: '/certs/hubspot-content.png'
+        image: '/certs/hubspot-content.webp'
       },
       {
         name: 'Digital Marketing',
         year: '2023–2024',
         issuer: 'Hubspot',
-        image: '/certs/hubspot-digital.png'
+        image: '/certs/hubspot-digital.webp'
       }
     ]
   },
@@ -355,19 +355,19 @@ const certificates = [
         name: 'Design Thinking for Beginners',
         year: '2023–2024',
         issuer: 'Simplilearn',
-        image: '/certs/simplilearn-design.png'
+        image: '/certs/simplilearn-design.webp'
       },
       {
         name: 'Introduction to Graphic Design',
         year: '2023–2024',
         issuer: 'Simplilearn',
-        image: '/certs/simplilearn-graphics.png'
+        image: '/certs/simplilearn-graphics.webp'
       },
       {
         name: 'Website UI/UX Designing using ChatGPT',
         year: '2023–2024',
         issuer: 'Simplilearn',
-        image: '/certs/simplilearn-chatgpt.png'
+        image: '/certs/simplilearn-chatgpt.webp'
       }
     ]
   },
@@ -378,19 +378,19 @@ const certificates = [
         name: 'Backend Development and APIs',
         year: '2023–2024',
         issuer: 'FreeCodeCamp',
-        image: '/certs/fcc-backend.png'
+        image: '/certs/fcc-backend.webp'
       },
       {
         name: 'Legacy JavaScript Algorithms and Data Structure',
         year: '2023–2024',
         issuer: 'FreeCodeCamp',
-        image: '/certs/fcc-javascript.png'
+        image: '/certs/fcc-javascript.webp'
       },
       {
         name: 'Responsive Design',
         year: '2023–2024',
         issuer: 'FreeCodeCamp',
-        image: '/certs/fcc-responsive.png'
+        image: '/certs/fcc-responsive.webp'
       }
     ]
   }

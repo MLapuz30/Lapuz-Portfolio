@@ -88,7 +88,12 @@
           <span class="field-error" v-if="errors.message">{{ errors.message }}</span>
         </div>
 
-        <button type="submit" class="submit-btn" :class="{ 'is-loading': isLoading, 'is-sent': isSent }">
+        <!-- Error banner for missing env key (dev safety net) -->
+        <div class="env-error" v-if="envKeyMissing">
+          ⚠️ Web3Forms access key is not configured. Set <code>VITE_WEB3FORMS_ACCESS_KEY</code> in your environment variables.
+        </div>
+
+        <button type="submit" class="submit-btn" :class="{ 'is-loading': isLoading, 'is-sent': isSent }" :disabled="isLoading || isSent">
           <span class="btn-inner" v-if="!isLoading && !isSent">
             Send Message
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
@@ -121,10 +126,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 
+// ── Environment variable (set VITE_WEB3FORMS_ACCESS_KEY in Vercel) ──
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined
+const envKeyMissing = computed(() => !WEB3FORMS_KEY)
+
+// ── Refs ────────────────────────────────────────────────────────────
 function assignPillEl(el: unknown, i: number) {
-  pillEls.value[i] = (el instanceof Element) ? el : null;
+  pillEls.value[i] = (el instanceof Element) ? el : null
 }
 
 const headerRef  = ref<HTMLElement | null>(null)
@@ -134,6 +144,7 @@ const formRef    = ref<HTMLElement | null>(null)
 const availRef   = ref<HTMLElement | null>(null)
 const pillEls    = ref<(Element | null)[]>([])
 
+// ── Contact links ───────────────────────────────────────────────────
 const contactLinks = [
   {
     label: 'micah-lapuz',
@@ -152,28 +163,76 @@ const contactLinks = [
   },
 ]
 
-const form = reactive({ name: '', email: '', message: '' })
-const errors = reactive({ name: '', email: '', message: '' })
+// ── Form state ──────────────────────────────────────────────────────
+const form    = reactive({ name: '', email: '', message: '' })
+const errors  = reactive({ name: '', email: '', message: '' })
 const focused = ref<string | null>(null)
 const isLoading = ref(false)
-const isSent = ref(false)
+const isSent    = ref(false)
 
+// ── Validation ──────────────────────────────────────────────────────
 function validate(field: 'name' | 'email' | 'message') {
-  if (field === 'name')    errors.name    = form.name.trim() ? '' : 'Name is required.'
-  if (field === 'email')   errors.email   = !form.email.trim() ? 'Email is required.' : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email) ? 'Enter a valid email.' : ''
-  if (field === 'message') errors.message = form.message.trim().length < 10 ? 'Message must be at least 10 characters.' : ''
+  if (field === 'name')
+    errors.name = form.name.trim() ? '' : 'Name is required.'
+  if (field === 'email')
+    errors.email = !form.email.trim()
+      ? 'Email is required.'
+      : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)
+      ? 'Enter a valid email.'
+      : ''
+  if (field === 'message')
+    errors.message = form.message.trim().length < 10
+      ? 'Message must be at least 10 characters.'
+      : ''
 }
 
+// ── Submit → Web3Forms ──────────────────────────────────────────────
 async function handleSubmit() {
-  ;(['name','email','message'] as const).forEach(validate)
+  ;(['name', 'email', 'message'] as const).forEach(validate)
   if (errors.name || errors.email || errors.message) return
+
+  if (!WEB3FORMS_KEY) {
+    alert('Web3Forms access key is missing. Please contact the site owner.')
+    return
+  }
+
   isLoading.value = true
-  await new Promise(r => setTimeout(r, 1800))
-  isLoading.value = false
-  isSent.value = true
+
+  try {
+    const formData = new FormData()
+    formData.append('access_key', WEB3FORMS_KEY)
+    formData.append('name', form.name)
+    formData.append('email', form.email)
+    formData.append('message', form.message)
+    formData.append('subject', `New message from ${form.name} — Portfolio Contact`)
+
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData,
+    })
+
+    const data = await response.json()
+
+    if (data.success) {
+      isSent.value = true
+      form.name    = ''
+      form.email   = ''
+      form.message = ''
+      // Reset sent state after 5 seconds so the form can be used again
+      setTimeout(() => { isSent.value = false }, 5000)
+    } else {
+      alert('Error: ' + data.message)
+    }
+  } catch {
+    alert('Something went wrong. Please try again.')
+  } finally {
+    isLoading.value = false
+  }
 }
 
+// ── Scroll reveal ───────────────────────────────────────────────────
 const observers: IntersectionObserver[] = []
+
 function reveal(targets: (Element | null)[] | HTMLElement | null, stagger = 0) {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -183,6 +242,7 @@ function reveal(targets: (Element | null)[] | HTMLElement | null, stagger = 0) {
       obs.unobserve(el)
     })
   }, { threshold: 0.1 })
+
   const arr = Array.isArray(targets) ? targets : [targets]
   arr.forEach((el, i) => {
     if (!el) return
@@ -235,27 +295,6 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 @keyframes orb1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,30px)} }
 @keyframes orb2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(25px,-25px)} }
 
-@keyframes gradBorder {
-  0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
-}
-
-.icon-indicator {
-  display: inline-flex; align-items: center; justify-content: center;
-  background: #fff; border-radius: 20%; padding: 3px; flex-shrink: 0;
-}
-
-.ui-label    { top: 18%; right: 3%; animation: slideTopRight 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.5s both; }
-.avail-label { bottom: 22%; left: 3%; animation: slideLeft 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.7s both; }
-
-.status-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #67801F; box-shadow: 0 0 8px rgba(103,128,31,0.8);
-  flex-shrink: 0; animation: blink 2s ease-in-out infinite;
-}
-@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.8)} }
-@keyframes slideTopRight { from{opacity:0;transform:translateX(40px) translateY(-40px)} to{opacity:1;transform:none} }
-@keyframes slideLeft     { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:none} }
-
 /* ── Contact section ──────────────────────────────── */
 .contact-section {
   position: relative; z-index: 1;
@@ -284,9 +323,8 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 .name-serif {
   font-family: 'DM Serif Text', serif;
   font-style: italic; font-weight: 400;
-  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #fba3a3 100%); 
+  background: linear-gradient(135deg, #e0c0c0 0%, #fff 50%, #fba3a3 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-
 }
 .contact-sub {
   font-size: 0.97rem; line-height: 1.75;
@@ -384,7 +422,19 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 }
 .field-error::before { content: '·'; font-size: 1.2rem; line-height: 1; }
 
-/* ── Submit button — olive gradient, matches index primary ─ */
+/* ── Env error banner ─────────────────────────────── */
+.env-error {
+  font-size: 0.78rem; padding: 10px 14px;
+  background: rgba(224,192,192,0.08);
+  border: 1px solid rgba(224,192,192,0.25);
+  border-radius: 10px; color: #e0c0c0; line-height: 1.5;
+}
+.env-error code {
+  font-family: monospace; font-size: 0.75rem;
+  background: rgba(255,255,255,0.07); padding: 1px 5px; border-radius: 4px;
+}
+
+/* ── Submit button ────────────────────────────────── */
 .submit-btn {
   width: 100%; padding: 15px;
   border: none; border-radius: 999px; cursor: pointer;
@@ -394,14 +444,14 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
   box-shadow: inset 0 2px 4px rgba(255,255,255,0.28), 0 4px 12px var(--shadow-sm);
   transition: background 0.3s, transform 0.25s, box-shadow 0.3s;
 }
-.submit-btn:hover { background: #485e08; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(103,128,31,0.3); }
-.submit-btn:active { transform: translateY(0); }
+.submit-btn:hover:not(:disabled) { background: #485e08; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(103,128,31,0.3); }
+.submit-btn:active:not(:disabled) { transform: translateY(0); }
+.submit-btn:disabled { cursor: not-allowed; opacity: 0.85; }
 .submit-btn.is-sent {
   background: rgba(103,128,31,0.2);
   border: 1px solid rgba(103,128,31,0.4);
-  box-shadow: none; cursor: default;
+  box-shadow: none;
 }
-.submit-btn.is-sent:hover { background: rgba(103,128,31,0.2); transform: none; }
 
 .btn-inner {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -419,25 +469,19 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
   border-top: 1px solid rgba(255,255,255,0.05); padding: 1.5rem 2rem;
   opacity: 0; transform: translateY(14px);
   transition: opacity 0.7s ease, transform 0.7s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex; justify-content: center; align-items: center;
 }
 .avail-strip.is-visible { opacity: 1; transform: translateY(0); }
 .avail-inner {
-  max-width: 740px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: center;
+  max-width: 740px; margin: 0 auto;
+  display: flex; align-items: center; gap: 10px; justify-content: center;
 }
 .avail-dot {
   width: 7px; height: 7px; border-radius: 50%;
-  background: #67801F;
-  box-shadow: 0 0 8px rgba(103,128,31,0.7);
+  background: #67801F; box-shadow: 0 0 8px rgba(103,128,31,0.7);
   flex-shrink: 0; animation: blink 2.5s ease-in-out infinite;
 }
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.8)} }
 .avail-strip span:last-child {
   font-size: 0.78rem; color: rgba(255,255,255,0.28); letter-spacing: 0.04em;
 }
@@ -447,6 +491,5 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
   .contact-section { padding: 100px 1.5rem 4rem; }
   .form-row { grid-template-columns: 1fr; }
   .contact-pills { flex-direction: column; }
-  .ui-label, .avail-label { display: none; }
 }
 </style>

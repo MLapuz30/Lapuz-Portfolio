@@ -9,17 +9,17 @@ import Stack from '../component/Stack.vue';
 // ─── Stack motion images ──────────────────────────────────────────────────────
 // Loaded from /public/works/ — displayed in the draggable Stack component
 const stackImages = [
-  { id: 1,  img: '/works/works1.png' },
-  { id: 2,  img: '/works/works2.png' },
-  { id: 3,  img: '/works/works3.png' },
-  { id: 4,  img: '/works/works4.png' },
-  { id: 5,  img: '/works/works5.png' },
-  { id: 6,  img: '/works/works6.png' },
-  { id: 7,  img: '/works/works7.png' },
-  { id: 8,  img: '/works/works8.png' },
-  { id: 9,  img: '/works/works9.png' },
-  { id: 10, img: '/works/works10.png' },
-  { id: 11, img: '/works/works11.png' },
+  { id: 1,  img: '/works/works1.webp' },
+  { id: 2,  img: '/works/works2.webp' },
+  { id: 3,  img: '/works/works3.webp' },
+  { id: 4,  img: '/works/works4.webp' },
+  { id: 5,  img: '/works/works5.webp' },
+  { id: 6,  img: '/works/works6.webp' },
+  { id: 7,  img: '/works/works7.webp' },
+  { id: 8,  img: '/works/works8.webp' },
+  { id: 9,  img: '/works/works9.webp' },
+  { id: 10, img: '/works/works10.webp' },
+  { id: 11, img: '/works/works11.webp' },
 ];
 
 // ─── Project data ─────────────────────────────────────────────────────────────
@@ -71,45 +71,45 @@ const projects = [
 // ─── Testimonials data ────────────────────────────────────────────────────────
 const testimonials = [
   {
-    name: 'Name',
-    role: 'Position',
-    avatar: 'N/A',
-    quote: 'Lorem ipsum dolor sit amet. Et voluptas perferendis qui velit neque aut repellendus facere cum voluptas amet sit dolor nemo!',
+    name: 'Chris Almocera',
+    role: 'Faculty, School of Computing',
+    avatar: 'CA',
+    quote: 'Micah is a dedicated student leader whose passion shows in the creativity, quality, and functionality of her projects. With her strong work ethic and drive to improve, she is on the path to becoming a successful developer.',
     rating: 5,
   },
   {
-    name: 'Name',
-    role: 'Position',
-    avatar: 'N/A',
-    quote: 'Lorem ipsum dolor sit amet. Et voluptas perferendis qui velit neque aut repellendus facere cum voluptas amet sit dolor nemo!',
+    name: 'Bernard Deguzman',
+    role: 'Faculty, School of Computing',
+    avatar: 'BD',
+    quote: 'Micah is a combination of being smart and a well-rounded student. Having observed her growth and contributions, I can confidently state that she represents the ideal blend of talent and character.',
     rating: 5,
   },
   {
-    name: 'Name',
-    role: 'Position',
-    avatar: 'N/A',
-    quote: 'Lorem ipsum dolor sit amet. Et voluptas perferendis qui velit neque aut repellendus facere cum voluptas amet sit dolor nemo!',
+    name: 'Noelle Enriquez',
+    role: 'Buffs Chicken CEO',
+    avatar: 'NE',
+    quote: 'Micah has a natural talent for design. She understood exactly what we needed, brought creativity and attention to detail to every part of the project, and delivered a strong, polished result that exceeded our expectations.',
     rating: 5,
   },
   {
-    name: 'Name',
-    role: 'Position',
-    avatar: 'N/A',
-    quote: 'Lorem ipsum dolor sit amet. Et voluptas perferendis qui velit neque aut repellendus facere cum voluptas amet sit dolor nemo!',
+    name: 'Maxene Quiambao',
+    role: 'Project Collaborator',
+    avatar: 'MQ',
+    quote: 'Micah is a motivated, creative, passionate, and focused individual who never settles for less. She works on projects until they meet her high standards and always finds innovative ways to bring out their best.',
     rating: 5,
   },
   {
-    name: 'Name',
-    role: 'Position',
-    avatar: 'N/A',
-    quote: 'Lorem ipsum dolor sit amet. Et voluptas perferendis qui velit neque aut repellendus facere cum voluptas amet sit dolor nemo!',
+    name: 'Christine Yunun',
+    role: 'Project Collaborator',
+    avatar: 'CY',
+    quote: 'Micah effectively transforms design concepts into functional interfaces. Her  dedication to delivering high-quality work make her an invaluable collaborator who consistently elevates every project she contributes to.',
     rating: 5,
   },
   {
-    name: 'Name',
-    role: 'Position',
-    avatar: 'N/A',
-    quote: 'Lorem ipsum dolor sit amet. Et voluptas perferendis qui velit neque aut repellendus facere cum voluptas amet sit dolor nemo!',
+    name: 'Kyle Payawal',
+    role: 'Project Collaborator',
+    avatar: 'KP',
+    quote: 'Micah has a keen eye for design and a natural sense of creativity. Her work always stands out, and I trust her honest, constructive feedback, which never feels harsh and always helps me improve, bringing out the best in my work too.',
     rating: 5,
   },
 ];
@@ -407,7 +407,7 @@ onUnmounted(() => window.removeEventListener('resize', updateStackSize));
               <!-- Project preview images — each keyed to project id for precise control -->
               <template v-if="project.id === 1">
                 <img
-                  src="/buffschicken.png"
+                  src="/buffschicken.webp"
                   alt="Buffs Chicken e-commerce platform"
                   class="unified-project-img"
                   loading="lazy"
@@ -417,7 +417,7 @@ onUnmounted(() => window.removeEventListener('resize', updateStackSize));
               </template>
               <template v-else-if="project.id === 2">
                 <img
-                  src="/codegeeks.png"
+                  src="/codegeeks.webp"
                   alt="Code Geeks student organization website"
                   class="unified-project-img"
                   loading="lazy"
@@ -447,7 +447,7 @@ onUnmounted(() => window.removeEventListener('resize', updateStackSize));
               </template>
               <template v-else-if="project.id === 5">
                 <img
-                  src="/runnershigh.png"
+                  src="/runnershigh.webp"
                   alt="Runner's High running club website"
                   class="unified-project-img"
                   loading="lazy"

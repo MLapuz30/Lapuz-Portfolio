@@ -152,7 +152,7 @@ const isContactItem = (label: string) => label.toLowerCase() === 'contact';
       <!-- LEFT LOGO (Desktop only) -->
       <div class="flex items-center -mr-100 ml-100">
         <RouterLink to="/">
-          <img src="/logo.png" alt="Logo" class="h-10 w-auto object-contain" />
+          <img src="/logo.webp" alt="Logo" class="h-10 w-auto object-contain" />
         </RouterLink>
       </div>
 
@@ -237,7 +237,7 @@ const isContactItem = (label: string) => label.toLowerCase() === 'contact';
       >
         <div class="flex md:hidden items-center justify-between w-full" :style="{ height: 'var(--nav-h)' }">
           <RouterLink to="/" class="flex items-center flex-shrink-0">
-            <img src="/logo.png" alt="Logo" class="h-8 w-auto object-contain" />
+            <img src="/logo.webp" alt="Logo" class="h-8 w-auto object-contain" />
           </RouterLink>
 
           <!-- Hamburger -->
