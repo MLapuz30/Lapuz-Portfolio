@@ -136,7 +136,11 @@ const WEB3FORMS_KEY = String(
 )
   .trim()
   .replace(/^['\"]|['\"]$/g, '')
-const envKeyMissing = computed(() => WEB3FORMS_KEY.length === 0)
+const envKeyMissing = computed(() => import.meta.env.DEV && WEB3FORMS_KEY.length === 0)
+
+if (import.meta.env.DEV) {
+  console.info('[Contact] Web3Forms key detected:', WEB3FORMS_KEY.length > 0)
+}
 
 // ── Refs ────────────────────────────────────────────────────────────
 function assignPillEl(el: unknown, i: number) {
