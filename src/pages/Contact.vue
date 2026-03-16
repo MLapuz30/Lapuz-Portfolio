@@ -53,6 +53,15 @@
 
       <!-- Form -->
       <form class="contact-form" ref="formRef" @submit.prevent="handleSubmit" novalidate>
+        <input
+          type="text"
+          class="hp-field"
+          v-model="form.botcheck"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+        />
+
         <div class="form-row">
           <div class="form-field" :class="{ 'has-error': errors.name, 'is-focused': focused === 'name' }">
             <label class="field-label">Your Name</label>
@@ -174,7 +183,7 @@ const contactLinks = [
 ]
 
 // ── Form state ──────────────────────────────────────────────────────
-const form    = reactive({ name: '', email: '', message: '' })
+const form    = reactive({ name: '', email: '', message: '', botcheck: '' })
 const errors  = reactive({ name: '', email: '', message: '' })
 const focused = ref<string | null>(null)
 const isLoading = ref(false)
@@ -198,6 +207,9 @@ function validate(field: 'name' | 'email' | 'message') {
 
 // ── Submit → Web3Forms ──────────────────────────────────────────────
 async function handleSubmit() {
+  // Honeypot: bots fill hidden fields; real users never should.
+  if (form.botcheck.trim()) return
+
   ;(['name', 'email', 'message'] as const).forEach(validate)
   if (errors.name || errors.email || errors.message) return
 
@@ -211,9 +223,13 @@ async function handleSubmit() {
   try {
     const formData = new FormData()
     formData.append('access_key', WEB3FORMS_KEY)
+    formData.append('from_name', form.name)
+    formData.append('replyto', form.email)
     formData.append('name', form.name)
     formData.append('email', form.email)
     formData.append('message', form.message)
+    formData.append('botcheck', form.botcheck)
+    formData.append('from_website', window.location.origin)
     formData.append('subject', `New message from ${form.name} — Portfolio Contact`)
 
     const response = await fetch('https://api.web3forms.com/submit', {
@@ -228,10 +244,16 @@ async function handleSubmit() {
       form.name    = ''
       form.email   = ''
       form.message = ''
+      form.botcheck = ''
       // Reset sent state after 5 seconds so the form can be used again
       setTimeout(() => { isSent.value = false }, 5000)
     } else {
-      alert('Error: ' + data.message)
+      const message = String(data.message ?? 'Unknown error')
+      if (message.toLowerCase().includes('marked as spam')) {
+        alert('Your message was flagged as spam. Please avoid test-like or repetitive content and try again, or contact me directly via email.')
+      } else {
+        alert('Error: ' + message)
+      }
     }
   } catch {
     alert('Something went wrong. Please try again.')
@@ -390,6 +412,15 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
   transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
 }
 .contact-form.is-visible { opacity: 1; transform: translateY(0); }
+
+.hp-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .form-field { display: flex; flex-direction: column; gap: 8px; }
