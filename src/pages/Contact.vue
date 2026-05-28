@@ -123,14 +123,6 @@
 
     </section>
 
-    <!-- Availability strip -->
-    <div class="avail-strip" ref="availRef">
-      <div class="avail-inner">
-        <span class="avail-dot" />
-        <span>Available Tuesday – Saturday &nbsp;·&nbsp; 10am – 11pm PHT</span>
-      </div>
-    </div>
-
   </div>
 </template>
 

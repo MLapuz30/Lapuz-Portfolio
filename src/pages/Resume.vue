@@ -313,7 +313,7 @@ const experience = [
   {
     org: ['Code Geeks,', 'Holy Angel University'],
     title: 'President',
-    period: '2025–Present',
+    period: '2025–2026',
     desc: 'Lead a university-based organization dedicated to advancing web development skills and industry knowledge among students. Provides strategic leadership and direction in fostering a collaborative learning environment, organizing technical workshops and activities, and promoting excellence in modern development practices within the campus community.'
   },
   {
@@ -332,17 +332,39 @@ const experience = [
 
 const certificates = [
   {
+    issuer: 'Google',
+    items: [
+      {
+        name: 'Google Analytics 4',
+        year: '2026',
+        issuer: 'Google',
+        image: '/certs/google-ga4.webp'
+      },
+    ]
+  },{
     issuer: 'Hubspot',
     items: [
       {
+        name: '(SE0) Search Engine Optimization II',
+        year: '2026',
+        issuer: 'Hubspot',
+        image: '/certs/hubspot-seo2.webp'
+      },
+      {
+        name: '(SE0) Search Engine Optimization I',
+        year: '2026',
+        issuer: 'Hubspot',
+        image: '/certs/hubspot-seo1.webp'
+      },
+      {
         name: 'Content Marketing',
-        year: '2023–2024',
+        year: '2025',
         issuer: 'Hubspot',
         image: '/certs/hubspot-content.webp'
       },
       {
         name: 'Digital Marketing',
-        year: '2023–2024',
+        year: '2025',
         issuer: 'Hubspot',
         image: '/certs/hubspot-digital.webp'
       }
@@ -353,19 +375,19 @@ const certificates = [
     items: [
       {
         name: 'Design Thinking for Beginners',
-        year: '2023–2024',
+        year: '2025',
         issuer: 'Simplilearn',
         image: '/certs/simplilearn-design.webp'
       },
       {
         name: 'Introduction to Graphic Design',
-        year: '2023–2024',
+        year: '2025',
         issuer: 'Simplilearn',
         image: '/certs/simplilearn-graphics.webp'
       },
       {
         name: 'Website UI/UX Designing using ChatGPT',
-        year: '2023–2024',
+        year: '2025',
         issuer: 'Simplilearn',
         image: '/certs/simplilearn-chatgpt.webp'
       }
@@ -376,19 +398,19 @@ const certificates = [
     items: [
       {
         name: 'Backend Development and APIs',
-        year: '2023–2024',
+        year: '2025',
         issuer: 'FreeCodeCamp',
         image: '/certs/fcc-backend.webp'
       },
       {
         name: 'Legacy JavaScript Algorithms and Data Structure',
-        year: '2023–2024',
+        year: '2025',
         issuer: 'FreeCodeCamp',
         image: '/certs/fcc-javascript.webp'
       },
       {
         name: 'Responsive Design',
-        year: '2023–2024',
+        year: '2024',
         issuer: 'FreeCodeCamp',
         image: '/certs/fcc-responsive.webp'
       }
@@ -397,8 +419,8 @@ const certificates = [
 ]
 
 const awards = [
-  { name: "President's Lister",                 year: '2023–2024' },
-  { name: "Dean's Lister",                       year: '2023–2024' },
+  { name: "President's Lister",                  year: '2023–2024' },
+  { name: "Most Outstanding Councilor",          year: '2022–2023' },
   { name: 'TVL-ICT Valedictorian',               year: '2022–2023' },
   { name: 'Araw ng Parangal Leadership Awardee', year: '2022–2023' }
 ]

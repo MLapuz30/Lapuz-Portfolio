@@ -207,7 +207,7 @@ onBeforeUnmount(() => {
 const stats = [
   { value: '4+',   label: 'Projects Delivered' },
   { value: '100%', label: 'Internship Ready'   },
-  { value: '8',    label: 'Certificates'        },
+  { value: '10+',    label: 'Certificates'        },
 ]
 
 const technicalSkills = [
@@ -226,16 +226,22 @@ const softSkills = [
 const stacks = [
   { name: 'VSCode',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg',                    color: '#007acc' },
   { name: 'Figma',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',                      color: '#9129F3' },
-  { name: 'WordPress',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg',          color: '#21759b' },
   { name: 'Git',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',                          color: '#f05032' },
+  { name: 'Github',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg',             color: '#f7df1e' },
   { name: 'HTML5',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',                      color: '#e34f26' },
   { name: 'CSS3',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',                        color: '#1572b6' },
-  { name: 'Vue.js',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',                      color: '#42d392' },
-  { name: 'Angular',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg',              color: '#dd0031' },
-  { name: 'TailwindCSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',   color: '#38bdf8' },
-  { name: 'Shadcn',      icon: 'https://cdn.simpleicons.org/shadcnui',                                                             color: '#e0c0c0' },
-  { name: 'Node.js',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',                    color: '#68a063' },
   { name: 'JavaScript',  icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',            color: '#f7df1e' },
+  { name: 'WordPress',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg',          color: '#21759b' },
+  { name: 'Vue.js',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',                      color: '#42d392' },
+  { name: 'TailwindCSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',   color: '#38bdf8' },
+  { name: 'Angular',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg',              color: '#dd0031' },
+  { name: 'Flutter',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg',           color: '#38bdf8' },
+  { name: 'Node.js',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',                    color: '#68a063' },
+  { name: 'PHP',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg',                   color: '#9129F3' },
+  { name: 'Python',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg',             color: '#f7df1e' },
+  { name: 'Nuxt.js',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxtjs/nuxtjs-original.svg',             color: '#68a063' },
+
+
 ]
 
 const beyondItems = [
