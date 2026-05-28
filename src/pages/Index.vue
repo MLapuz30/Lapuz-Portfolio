@@ -302,7 +302,7 @@
       align: 'align-left',
     },
     {
-      text: 'Designing intuitive and user-centered experiences.',
+      text: 'Designing user-centered experiences',
       state: 'hidden',
       variant: 'bubble-accent',
       align: 'align-right',
@@ -314,7 +314,7 @@
       align: 'align-left',
     },
     {
-      text: 'Developing clean, scalable front-end solutions.”',
+      text: 'Developing efficient, clean, scalable front-end solutions.',
       state: 'hidden',
       variant: 'bubble-accent',
       align: 'align-right',

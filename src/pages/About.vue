@@ -32,7 +32,7 @@
           Work that doesn't just look good — it <em>feels</em> right.
         </p>
         <p class="hero-sub">
-          Based in Angeles City, PH &nbsp;·&nbsp; Remote-friendly &nbsp;·&nbsp; Open for freelance
+          Based in  Philippines &nbsp;·&nbsp; Remote-friendly &nbsp;·&nbsp; Open for freelance
         </p>
         <div class="hero-actions">
           <a href="/contact" class="btn btn-primary" aria-label="Contact Mary Micah Lapuz">Get in touch</a>
@@ -108,12 +108,13 @@
     <!-- ── BEYOND DEV ─────────────────────────────────── -->
     <section class="content-section beyond-section reveal-item" aria-label="Hobbies and interests">
       <h2 class="section-title section-title--center">Beyond Dev</h2>
-      <p class="section-sub">More than just a developer, I'm someone who immerses myself in the things I love.
-        My wide range of hobbies and interests reflects a multifaceted personality.
-        Beyond coding, I enjoy exploring leadership opportunities and engaging in extracurricular activities.
-        I have a particular passion for photography, especially with a vintage or 1920s film aesthetic.
-        I love embracing new experiences, often stepping outside my comfort zone, and
-        I find joy in traveling, journaling, and crafting.</p>
+      <p class="section-sub">
+        More than just a developer, I immerse myself in the things I love, with a wide range of hobbies and interests that reflect a multifaceted personality. 
+        Beyond coding, I actively explore leadership opportunities and engage in extracurricular activities that help me grow both professionally and personally. 
+        I have a strong passion for photography, especially vintage 1920s-inspired film aesthetics, and a deep appreciation for art and flowers, 
+        which inspire me through their beauty, detail, and emotional expression. 
+        I also embrace new experiences outside my comfort zone—traveling, journaling, and crafting—
+        which allow me to reflect, create, and continuously grow as a person.</p>
       <div class="beyond-grid">
         <div
           class="beyond-card reveal-item"
