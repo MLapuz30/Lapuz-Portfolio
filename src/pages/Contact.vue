@@ -123,6 +123,16 @@
 
     </section>
 
+    <!-- Availability strip -->
+    <div class="avail-strip" ref="availRef">
+      <div class="avail-inner">
+        <span class="avail-dot" />
+        <span class="avail-text">
+          <span class="avail-highlight">Open to work</span>
+          &nbsp;·&nbsp; Available for freelance
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -497,6 +507,19 @@ onUnmounted(() => observers.forEach(o => o.disconnect()))
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Availability strip ───────────────────────────── */
+.avail-text {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.05em;
+  font-weight: 400;
+}
+
+.avail-highlight {
+  color: #8aab28;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
 .avail-strip {
   position: relative; z-index: 1;
   border-top: 1px solid rgba(255,255,255,0.05); padding: 1.5rem 2rem;

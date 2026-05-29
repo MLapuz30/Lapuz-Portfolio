@@ -118,15 +118,15 @@
 
       <!-- ── Call-to-action buttons ── -->
       <div class="cta-buttons" role="group" aria-label="Primary actions">
-        <!-- Opens resume PDF in a new tab -->
+        <!-- Downloads resume PDF -->
         <button
           class="btn btn-primary"
           @click="viewResume"
-          aria-label="View Micah Lapuz's resume — opens PDF in a new tab"
+          aria-label="Download Micah Lapuz's resume as a PDF"
           type="button"
         >
-          <span>View Resume</span>
-          <!-- Arrow icon indicating external/new-tab link -->
+          <span>Resume</span>
+          <!-- Arrow icon -->
           <svg
             class="btn-arrow"
             xmlns="http://www.w3.org/2000/svg"
@@ -373,9 +373,14 @@
     clearAllTimeouts();
   });
 
-  // Opens the resume PDF in a new browser tab
+  // Triggers an automatic download of the resume PDF
   const viewResume = () => {
-    window.open('/Mary Micah Lapuz - Resume.pdf', '_blank', 'noopener,noreferrer');
+    const link = document.createElement('a');
+    link.href = '/Micah Lapuz - CV.pdf';
+    link.download = 'Micah Lapuz - CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 </script>
 
@@ -571,7 +576,7 @@
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.1) 100%
+    rgba(255, 255, 255, 0.06) 100%
   );
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-3px);
@@ -880,48 +885,39 @@
 
 /* ============================================================
     RESPONSIVE — Tablet (≤900px)
-    Layout: hero content shifts up slightly, chat widgets
-    stack into a unified bottom bar — left tagline on left,
-    right conversation on right, reduced font/padding.
 ============================================================ */
 @media (max-width: 900px) {
-  /* ── Section ── */
   .hero-section {
-    height: 100dvh; /* dynamic viewport height handles mobile browser chrome */
+    height: 100dvh;
     min-height: 600px;
   }
 
-  /* ── Hero content: vertically centered in upper 65% of screen ── */
   .hero-content {
     justify-content: center;
     padding-top: 0;
-    padding-bottom: 180px; /* reserve bottom space for chat widgets */
+    padding-bottom: 180px;
     padding-left: 2rem;
     padding-right: 2rem;
     gap: 0;
   }
 
-  /* ── Eyebrow ── */
   .eyebrow {
     margin-bottom: 1.5rem;
   }
 
-  /* ── Name ── */
   .name-text {
     font-size: clamp(3.2rem, 10vw, 5.5rem);
     letter-spacing: -0.3rem;
     margin-bottom: 1.75rem;
   }
 
-  /* ── Badges: tighten gap, keep side-by-side ── */
   .badges-container {
     gap: 1rem;
     margin-top: 1.5rem;
     margin-bottom: 0;
-    flex-wrap: nowrap; /* keep on one row on tablet */
+    flex-wrap: nowrap;
   }
 
-  /* Suppress animation transform conflicts on tablet — let badge just sit still */
   .badge-left,
   .badge-right {
     animation:
@@ -944,13 +940,11 @@
   .badge-title      { font-size: 0.78rem; }
   .badge-label      { font-size: 0.58rem; }
 
-  /* ── CTAs ── */
   .cta-buttons {
     margin-top: 2rem;
     gap: 0.65rem;
   }
 
-  /* ── Chat widget left (tagline) — bottom-left, compact ── */
   .chat-widget-left {
     bottom: 1.75rem;
     left: 1.5rem;
@@ -962,7 +956,6 @@
     line-height: 1.45;
   }
 
-  /* ── Chat widget right (conversation) — bottom-right, compact ── */
   .chat-widget {
     bottom: 1.75rem;
     right: 1.5rem;
@@ -979,7 +972,6 @@
 
 /* ============================================================
     RESPONSIVE — Mobile landscape (≤768px, landscape orientation)
-    Reduce vertical spacing to fit everything in one short viewport.
 ============================================================ */
 @media (max-width: 768px) and (orientation: landscape) {
   .hero-content {
@@ -1007,35 +999,28 @@
 
 /* ============================================================
     RESPONSIVE — Mobile portrait (≤600px)
-    Strategy: hero content centered in upper ~60% of screen.
-    Chat widgets move to a unified bottom strip, side by side,
-    constrained so they never overlap.
 ============================================================ */
 @media (max-width: 600px) {
-  /* ── Section fills dynamic viewport ── */
   .hero-section {
     height: 100dvh;
     min-height: 580px;
   }
 
-  /* ── Hero content: vertically centered in upper portion, bottom reserved for widgets ── */
   .hero-content {
     justify-content: center;
     align-items: center;
     padding-top: 0;
-    padding-bottom: 160px; /* pushes center point up, leaving bottom for chat widgets */
+    padding-bottom: 160px;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
   }
 
-  /* ── Eyebrow ── */
   .eyebrow {
     font-size: 0.68rem;
     letter-spacing: 0.28em;
     margin-bottom: 1.25rem;
   }
 
-  /* ── Name ── */
   .hero-name { margin-top: 0; }
   .name-text {
     font-size: clamp(2.8rem, 13vw, 4.5rem);
@@ -1044,7 +1029,6 @@
     margin-bottom: 1.5rem;
   }
 
-  /* ── Badges: side-by-side, scaled down, no sway on small screens ── */
   .badges-container {
     flex-direction: row;
     flex-wrap: nowrap;
@@ -1055,7 +1039,6 @@
     justify-content: center;
   }
 
-  /* Disable continuous sway on mobile — avoids jank and saves battery */
   .badge-left {
     animation: floatInScaleLeft 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
     transform: rotate(-2deg);
@@ -1064,7 +1047,6 @@
     animation: floatInScaleRight 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s both;
     transform: rotate(2deg);
   }
-  /* Keep static rotation after entrance animation */
   .badge-left:not(:hover)  { transform: rotate(-2deg); }
   .badge-right:not(:hover) { transform: rotate(2deg); }
 
@@ -1080,7 +1062,6 @@
   .badge-title  { font-size: 0.72rem; }
   .badge-label  { font-size: 0.55rem; }
 
-  /* ── CTAs: full-width stacked ── */
   .cta-buttons {
     flex-direction: column;
     width: 100%;
@@ -1095,16 +1076,11 @@
     font-size: 0.875rem;
   }
 
-  /* ── Chat widgets: pinned side-by-side at the bottom ──
-      Left widget (tagline) anchored to left edge.
-      Right widget (conversation) anchored to right edge.
-      Both sit above safe-area inset for notched devices.
-  ── */
   .chat-widget-left {
     position: absolute;
     bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     left: 1rem;
-    right: 50%; /* prevents overlap with right widget */
+    right: 50%;
     max-width: none;
     width: auto;
     padding-right: 0.5rem;
@@ -1114,14 +1090,13 @@
     position: absolute;
     bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     right: 1rem;
-    left: 50%; /* prevents overlap with left widget */
+    left: 50%;
     max-width: none;
     width: auto;
     padding-left: 0.5rem;
     align-items: flex-end;
   }
 
-  /* Constrain chat rows to not exceed half screen width */
   .chat-widget .chat-row { width: 100%; }
 
   .tagline-bubble-text {
@@ -1136,7 +1111,6 @@
     line-height: 1.4;
   }
 
-  /* Slightly smaller typing dots on mobile */
   .typing-dot { width: 6px; height: 6px; }
 
   .rotating-word {
@@ -1148,7 +1122,6 @@
 
 /* ============================================================
     RESPONSIVE — Small mobile (≤390px)
-    Tighten everything further for very small viewports.
 ============================================================ */
 @media (max-width: 390px) {
   .hero-content {

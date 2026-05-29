@@ -202,7 +202,12 @@ import Lenis from 'lenis'
 
 // ── View Resume ───────────────────────────────────────
 const viewResume = () => {
-  window.open('/Mary Micah Lapuz - Resume.pdf', '_blank')
+  const link = document.createElement('a')
+  link.href = '/Micah Lapuz - CV.pdf'
+  link.download = 'Micah Lapuz - CV.pdf'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
 }
 
 // ── Lenis smooth scroll ───────────────────────────────
